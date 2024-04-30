@@ -22,8 +22,6 @@ drain_node() {
   if [[ $exit_status -ne 0 ]]; then
     echo "Failed to drain node: $node"
     exit 1
-  else
-    echo "Node drained: $node"
   fi
 }
 
@@ -32,13 +30,6 @@ uncordon_node() {
   echo "Uncordoning node: $node"
   uncordon_output=$(KUBECONFIG="$KUBECONFIG" kubectl uncordon "$node" 2>&1)
   echo "$uncordon_output"
-
-  local exit_status=$?
-  if [[ $exit_status -ne 0 ]]; then
-    echo "Failed to uncordon node: $node"
-  else
-    echo "Node uncordoned: $node"
-  fi
 }
 
 update_node() {
