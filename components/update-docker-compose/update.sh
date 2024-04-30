@@ -20,9 +20,9 @@ execute_command_on_machine() {
 }
 
 update_stack() {
-  execute_command_on_machine "docker compose -f $COMPOSE_NAME/docker-compose.yaml down"
-  execute_command_on_machine "docker compose -f $COMPOSE_NAME/docker-compose.yaml pull"
-  execute_command_on_machine "docker compose -f $COMPOSE_NAME/docker-compose.yaml up -d"
+  execute_command_on_machine "docker compose -f $COMPOSE_LOCATION/docker-compose.yaml down"
+  execute_command_on_machine "docker compose -f $COMPOSE_LOCATION/docker-compose.yaml pull"
+  execute_command_on_machine "docker compose -f $COMPOSE_LOCATION/docker-compose.yaml up -d"
   execute_command_on_machine "docker ps"
 }
 
