@@ -4,7 +4,11 @@
     "type": "shell",
     "parameters":[
         {
-            "name": "Docker host",
+            "name": "Vm/CT ID",
+            "datatype": "text"
+        },
+        {
+            "name": "Host",
             "datatype": "text"
         },
         {
