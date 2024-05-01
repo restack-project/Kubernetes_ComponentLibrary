@@ -1,15 +1,21 @@
 #!/bin/bash
 
 # Parameters
-DOCKER_HOST="$1"  
-USER="$2"
-COMPOSE_LOCATION="$3"
-SSH_PRIVATE_KEY="${4:-id_rsa}"
+$VM_CT_ID="$1"
+DOCKER_HOST="$2"  
+USER="$3"
+COMPOSE_LOCATION="$4"
+SSH_PRIVATE_KEY="${5:-id_rsa}"
 
 execute_command_on_machine() {
   local command="$1"
 
-  output=$(ssh -i "$SSH_PRIVATE_KEY" -o StrictHostKeyChecking=no "$USER"@"$DOCKER_HOST" "$command" 2>&1)
+  if [[ $VM_CT_ID == "0" || $VM_CT_ID -eq 0 ]]; then
+    output=$(ssh -i "$SSH_PRIVATE_KEY" -o StrictHostKeyChecking=no "$USER"@"$PROXMOX_HOST" "bash -c '$command' 2>&1")
+  else
+    output=$(ssh -i "$SSH_PRIVATE_KEY" -o StrictHostKeyChecking=no "$USER"@"$PROXMOX_HOST" "pct exec $VM_CT_ID -- bash -c \"$command\" 2>&1")
+  fi
+
   echo "$output"
 
   local exit_status=$?
